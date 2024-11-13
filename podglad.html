@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podgląd artykułu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        #article-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        p {
+            color: #34495e;
+            margin-bottom: 1.2em;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 0;
+            padding-left: 20px;
+            color: #7f8c8d;
+        }
+
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="article-container"></div>
+
+    <script>
+        // Funkcja do wczytywania zawartości pliku
+        async function loadArticle() {
+            try {
+                const response = await fetch('zadanie.txt');
+                const content = await response.text();
+                const container = document.getElementById('article-container');
+                container.innerHTML = marked.parse(content);
+            } catch (error) {
+                console.error('Błąd podczas wczytywania pliku:', error);
+                document.getElementById('article-container').innerHTML = 
+                    '<p style="color: red">Błąd podczas wczytywania artykułu. ' +
+                    'Sprawdź, czy plik zadanie.txt istnieje i jest dostępny.</p>';
+            }
+        }
+
+        // Wczytaj artykuł po załadowaniu strony
+        window.addEventListener('load', loadArticle);
+    </script>
+</body>
+</html>
+
+
